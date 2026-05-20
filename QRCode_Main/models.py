@@ -7,8 +7,17 @@ class Student(models.Model):
     paid_penalty = models.BooleanField(default=False)
     paid_keepy = models.BooleanField(default=False)
     paid_sponges = models.BooleanField(default=False)
+    form_group = models.CharField(max_length=100)
+    used_penalty = models.BooleanField(default=False)
+    used_keepy = models.BooleanField(default=False) 
+    used_sponges = models.BooleanField(default=False)
 
 class ScanLog(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     activity = models.CharField(max_length=100)  # "penalty", "keepy", "sponges"
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class login_details(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
