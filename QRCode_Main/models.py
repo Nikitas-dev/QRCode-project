@@ -4,9 +4,7 @@ class Student(models.Model):
     qr_token = models.CharField(max_length=1000, unique=True)
     student_name = models.CharField(max_length=100)
     year_group = models.CharField(max_length=10)
-    paid_penalty = models.BooleanField(default=False)
-    paid_keepy = models.BooleanField(default=False)
-    paid_sponges = models.BooleanField(default=False)
+
 
 class ScanLog(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
