@@ -256,6 +256,7 @@ h1{
   color:#f0f0f0;
   line-height:1.5;
   word-break:break-word;
+  white-space:pre-line;
 }
 
 #result-text a{
@@ -544,74 +545,98 @@ detailsBtn.style.display = "none";
 
 /* ---------- QR SCANNER ---------- */
 
-function onScanSuccess(decodedText){
+async function onScanSuccess(decodedText){
 
   if(decodedText === lastResult) return;
 
   lastResult = decodedText;
 
-  // Turns the screen green when successfully scanned. Should be modified so it is when successfully added to database
-  document.body.classList.add("scan-success");
-  
-
-  
-
-  // Send QR data to Django
-  fetch("/api/qr-scan/", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCSRFToken()
-      },
-      body: JSON.stringify({
-          qr_data: decodedText
-      })
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log("Server response:", data);
-  })
-  .catch(error => {
-      console.error(error);
-  });
-
   if(navigator.vibrate){
     navigator.vibrate(100);
   }
 
-  let display;
+  statusEl.textContent = "Checking QR code...";
+  statusEl.className = "active";
 
   try{
 
-    const url = new URL(decodedText);
+    const response = await fetch("/api/qr-scan/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCSRFToken()
+      },
+      body: JSON.stringify({
+        qr_data: decodedText
+      })
+    });
 
-    if(url.protocol === "http:" || url.protocol === "https:"){
+    const data = await response.json();
 
-      display =
-        `<a href="${decodedText}"
-            target="_blank"
-            rel="noopener">
-            ${decodedText}
-         </a>`;
+    console.log("Server response:", data);
 
-    }else{
-      display = decodedText;
+    resultCard.classList.add("visible");
+    copyBtn.textContent = "Copy";
+
+    if(data.status === "ok"){
+
+      document.body.classList.remove("scan-fail");
+      document.body.classList.add("scan-success");
+
+      resultText.textContent =
+        `Name: ${data.student.name}
+Year Group: ${data.student.year_group}
+Form Group: ${data.student.form_group}
+QR Token: ${data.student.qr_token}`;
+
+      detailsBtn.style.display = "none";
+
+      statusEl.textContent = "Student found";
+      statusEl.className = "scanned";
+
+    } else if(data.status === "empty" || data.status === "unregistered"){
+
+      document.body.classList.remove("scan-success");
+      document.body.classList.add("scan-fail");
+
+      resultText.textContent =
+        "No student details are saved for this QR code yet. Click Enter Details to add them.";
+
+      detailsBtn.style.display = "inline-block";
+
+      statusEl.textContent = "Details needed";
+      statusEl.className = "error";
+
+    } else {
+
+      document.body.classList.remove("scan-success");
+      document.body.classList.add("scan-fail");
+
+      resultText.textContent = data.reason || "QR code rejected";
+
+      detailsBtn.style.display = "none";
+
+      statusEl.textContent = "QR rejected";
+      statusEl.className = "error";
+
     }
 
-  }catch{
-    display = decodedText;
+  }catch(error){
+
+    console.error(error);
+
+    document.body.classList.remove("scan-success");
+    document.body.classList.add("scan-fail");
+
+    resultCard.classList.add("visible");
+    resultText.textContent = "Server error. Could not check QR code.";
+
+    detailsBtn.style.display = "none";
+
+    statusEl.textContent = "Server error";
+    statusEl.className = "error";
+
   }
-
-  resultText.innerHTML = display;
-
-  resultCard.classList.add("visible");
-
-  detailsBtn.style.display = "inline-block";
-
-  statusEl.textContent = "Code detected";
-  statusEl.className = "scanned";
-
-  copyBtn.textContent = "Copy";
 }
 
 function getCSRFToken() {
@@ -742,11 +767,33 @@ detailsForm.addEventListener("submit", async (e) => {
 
     const data = await response.json();
 
-    console.log("Submitted:", data);
+  console.log("Submitted:", data);
 
-    alert("Details uploaded successfully!");
+if(data.success){
 
-    detailsModal.classList.remove("show");
+  document.body.classList.remove("scan-fail");
+  document.body.classList.add("scan-success");
+
+  resultText.textContent =
+    `Name: ${data.student.name}
+Year Group: ${data.student.year_group}
+Form Group: ${data.student.form_group}
+QR Token: ${data.student.qr_token}`;
+
+  detailsBtn.style.display = "none";
+
+  statusEl.textContent = "Details saved";
+  statusEl.className = "scanned";
+
+  alert("Details uploaded successfully!");
+
+  detailsModal.classList.remove("show");
+
+} else {
+
+  alert(data.reason || "Upload failed");
+
+}
 
   }catch(err){
 
@@ -771,6 +818,7 @@ try{
   lastResult = "";
 
   document.body.classList.remove("scan-success");
+  document.body.classList.remove("scan-fail");
 
   resultCard.classList.remove("visible");
 
