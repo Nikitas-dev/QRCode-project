@@ -33,9 +33,32 @@ def scan(request):
     print(f"Name:        {student.student_name}")
     print(f"Year Group:  {student.year_group}")
     print(f"QR Token:    {student.qr_token}")
-    print(f"Paid Penalty:  {student.paid_penalty}")
-    print(f"Paid Keepy:    {student.paid_keepy}")
-    print(f"Paid Sponges:  {student.paid_sponges}")
     print("=====================")
 
     return JsonResponse({'status': 'ok'})
+    
+
+@csrf_exempt
+def submit_details(request):
+
+    if request.method == "POST":
+
+        data = json.loads(request.body)
+
+        qr_data = data.get("qr_data")
+        name = data.get("name")
+        year_group = data.get("year_group")
+        form_group = data.get("form_group")
+
+        print(qr_data)
+        print(name)
+        print(year_group)
+        print(form_group)
+
+        return JsonResponse({
+            "success": True
+        })
+
+    return JsonResponse({
+        "success": False
+    })

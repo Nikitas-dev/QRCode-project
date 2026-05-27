@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "qr_token": "ABC123",
-      "student_name": "Ruchit Soni",
+      "student_name": "Ruchit Soni ",
       "year_group": "12",
       "paid_penalty": true,
       "paid_keepy": false,
@@ -16,7 +16,7 @@
     "pk": 2,
     "fields": {
       "qr_token": "XYZ789",
-      "student_name": "Aaron Bum",
+      "student_name": "Aaron the goat ",
       "year_group": "11",
       "paid_penalty": true,
       "paid_keepy": true,

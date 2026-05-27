@@ -3,7 +3,7 @@ import json
 import random
 
 df = pd.read_csv(testing.csv)
-activities = ["penalty","keepy","sponge"]
+activities = []
 
 for i, row in df.iterrows():
     activity_status = {}
