@@ -365,9 +365,10 @@ input {
   cursor:pointer;
   width:200px;
   height: 20px;
-  margin:20px;
+  margin:10px;
   border:1px solid black;
-  padding:5px;
+  padding:15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 label {
@@ -406,10 +407,18 @@ label {
   display:block;
   margin:20px auto 0 auto;
 }
+#tung{position:fixed;bottom:0;right:0}
+#tung-ghost{width:150px;opacity:0.1;transform:translate(50%, 50%)}
 </style>
 </head>
 
 <body>
+
+<div id="tung">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Full_image_of_Tung_Tung_Tung_Sahur.png/250px-Full_image_of_Tung_Tung_Tung_Sahur.png" id="tung-ghost">
+
+</div>
+  
 
 <button id="openBtn">?</button>
 
@@ -524,6 +533,7 @@ label {
 
 <script>
 
+
 const statusEl = document.getElementById("status");
 const resultCard = document.getElementById("result-card");
 const resultText = document.getElementById("result-text");
@@ -545,7 +555,7 @@ detailsBtn.style.display = "none";
 
 /* ---------- QR SCANNER ---------- */
 
-async function onScanSuccess(decodedText){
+async function onScanSuccess1(decodedText){
 
   if(decodedText === lastResult) return;
 
@@ -639,6 +649,10 @@ QR Token: ${data.student.qr_token}`;
   }
 }
 
+async function  OnScanSuccess2(){
+
+}
+
 function getCSRFToken() {
     return document.cookie
         .split("; ")
@@ -681,7 +695,7 @@ html5QrCode.start(
     qrbox:{ width:220, height:220 },
     aspectRatio:1
   },
-  onScanSuccess,
+  onScanSuccess1,
   onScanFail
 )
 
@@ -831,7 +845,7 @@ try{
       qrbox:{width:220, height:220},
       aspectRatio:1
     },
-    onScanSuccess,
+    onScanSuccess1,
     onScanFail
 
   );

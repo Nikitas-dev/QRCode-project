@@ -8,6 +8,8 @@ from django.views.decorators.http import require_POST
 
 from .models import Student, ScanLog
 
+def login_view(request):
+    return render(request, "Login.html")
 
 def mainpage(request):
     return render(request, "QRCode_Main/mainpage.html")

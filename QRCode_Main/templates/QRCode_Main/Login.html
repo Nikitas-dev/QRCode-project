@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <script>
+document.getElementById("scanner_btn").addEventListener("click", () => {
+    window.location.href = "/scanner/";
+});
+</script>
+<style>
+/* Default for all elements*/
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+
+/* aligning h1 properly*/
+h1{text-align:center;margin-top: 20px}
+
+/* centering the div*/
+div{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:80vh;
+}
+/* adding spacing between the form and div as well as a border*/
+form{
+  display:flex;
+  flex-direction:column;
+  width:300px;
+  padding:20px;
+  border:1px solid #ccc;
+  border-radius:5px;
+}
+
+/* Styling the login button*/
+#login_submit{
+  padding:10px;
+  background-color:#007BFF;
+  color:white;
+  border:black 1px solid;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+/* When the button is hovered colors swap*/
+#login_submit:hover{
+  background-color:#ffffff;
+  color:#007BFF;
+}
+
+/*Styling the text boxes in the form*/
+input{
+  padding:10px;
+  margin-bottom:15px;
+  border:1px solid #ccc;
+  border-radius:5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);}
+
+  #scanner_btn{
+  padding:10px;
+  background-color:#111;
+  color:white;
+  border:1px solid black;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+#scanner_btn:hover{
+  background-color:white;
+  color:#111;
+}
+</style>
+<body>
+<!-- The title -->
+<h1>Login</h1>
+
+<!-- Establishing the div and form -->
+<div>
+ <form action="/login" method="post">
+
+  <label for="username">Stall name:</label>
+  <br>
+  <input type="text" id="username" name="username">
+
+  <br>
+
+  <label for="password">Password:</label>
+  <br>
+  <input type="password" id="password" name="password">
+
+  <br><br>
+
+  <button type="submit" id="login_submit">Login</button>
+
+  <br>
+
+  <button type="button" id="scanner_btn">
+    Go To QR Scanner
+  </button>
+
+</form>
+</div>
+<!--used br for spacing -->
+
+
+
+</html>
+</body>
