@@ -105,7 +105,7 @@ h1{
   width:100% !important;
   height:100% !important;
   object-fit:cover !important;
-  transform:scaleX(-1);
+  
 }
 
 /* hide default html5-qrcode UI */
@@ -407,18 +407,12 @@ label {
   display:block;
   margin:20px auto 0 auto;
 }
-#tung{position:fixed;bottom:0;right:0}
-#tung-ghost{width:150px;opacity:0.1;transform:translate(50%, 50%)}
 </style>
 </head>
 
 <body>
 
-<div id="tung">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Full_image_of_Tung_Tung_Tung_Sahur.png/250px-Full_image_of_Tung_Tung_Tung_Sahur.png" id="tung-ghost">
 
-</div>
-  
 
 <button id="openBtn">?</button>
 
@@ -604,7 +598,7 @@ QR Token: ${data.student.qr_token}`;
       statusEl.textContent = "Student found";
       statusEl.className = "scanned";
 
-    } else if(data.status === "empty" || data.status === "unregistered"){
+    } else if(data.status === "empty"){
 
       document.body.classList.remove("scan-success");
       document.body.classList.add("scan-fail");

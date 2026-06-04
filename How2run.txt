@@ -1,0 +1,16 @@
+
+The day before selling tickets: 
+
+python manage.py shell
+from QRCode_Main.models import Student
+Student.objects.all().delete()
+
+To create the tickets before selling them, only do this once: 
+python QRCodeMaker.py
+
+
+
+When selling tickets:
+
+(In the venv shell): python manage.py runserver 0.0.0.0:8000
+(In another shell): ngrok http 8000
