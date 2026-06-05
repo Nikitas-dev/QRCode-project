@@ -30,10 +30,13 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "unlikable-sarcasm-setback.ngrok-free.dev",
+    "10.2.0.2",
+    "192.168.137.1",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://unlikable-sarcasm-setback.ngrok-free.dev",
+    "https://192.168.137.1:8000",
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -47,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'QRCode_Main'
+    'QRCode_Main',
+    "django_extensions"
 ]
 
 MIDDLEWARE = [

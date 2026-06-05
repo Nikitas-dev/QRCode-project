@@ -1,18 +1,21 @@
-The day before selling tickets: 
+Before running this program, ensure these are done: 
 
-python manage.py shell
-from QRCode_Main.models import Student
-Student.objects.all().delete()
+ 1) All the tickets are made
+ 2) Check the CVS file to make sure that all the Tokens are loaded in there. 
 
-To create the tickets before selling them, only do this once: 
-python QRCodeMaker.py
+To create the tickets: 
+    - python QRCodeMaker.py (Only do this if you haven't created the tickets, do not run this command everytime you shut the server down.)
 
-To get into a venv: 
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Scripts\Activate.ps1 
+To delete all the ticket, run these commands one by one: 
+    - python manage.py shell
+    - from QRCode_Main.models import Student
+    - Student.objects.all().delete()
 
+To run the server you need to be a venv evnv, make sure you are in the QRCode_Project folder: 
 
-When selling tickets:
-(In the venv shell): python manage.py runserver 0.0.0.0:8000
-(In another shell): ngrok http 8000
+    - Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+    - .\Scripts\Activate.ps1 
 
+And to run the server: 
+    - (In the venv shell): python manage.py runserver 0.0.0.0:8000
+    - (In another shell): ngrok http 8000
