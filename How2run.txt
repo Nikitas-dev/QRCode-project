@@ -1,4 +1,3 @@
-
 The day before selling tickets: 
 
 python manage.py shell
@@ -8,9 +7,12 @@ Student.objects.all().delete()
 To create the tickets before selling them, only do this once: 
 python QRCodeMaker.py
 
+To get into a venv: 
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\Scripts\Activate.ps1 
 
 
 When selling tickets:
-
 (In the venv shell): python manage.py runserver 0.0.0.0:8000
 (In another shell): ngrok http 8000
+
